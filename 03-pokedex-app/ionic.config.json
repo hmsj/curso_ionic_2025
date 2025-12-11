@@ -1,5 +1,16 @@
 {
   "name": "03-pokedex-app",
   "integrations": {},
-  "type": "angular-standalone"
+  "type": "angular-standalone",
+  "@schematics/ionic:page": {
+    "flat": false
+  },
+  "schematic/ionic:service": {
+    "type": "service",
+    "flat": false
+  },
+  "schematic/ionic:pipe": {
+    "type": "pipe",
+    "flat": false
+  }
 }

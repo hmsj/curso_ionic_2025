@@ -147,6 +147,10 @@
     "@schematics/angular:service": {
       "type": "service",
       "flat": false
+    },
+    "@schematics/angular:pipe": {
+      "flat": false,
+      "standalone": true
     }
   }
 }
