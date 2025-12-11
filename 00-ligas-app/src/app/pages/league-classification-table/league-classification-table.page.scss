@@ -1,0 +1,37 @@
+.classification-table{
+
+  ion-grid {
+
+    ion-row {
+      border-bottom: 1px solid #000;
+
+      &.ion-no-border{
+        border: none;
+      }
+    }
+  }
+
+  ion-icon.icon-result {
+    font-size: 25px;
+  }
+
+  ion-icon.recent-result {
+    border-width: 1px;
+    border-radius: 50%;
+    border-style: solid;
+  }
+
+}
+
+ion-popover {
+  ion-grid {
+
+    ion-row {
+      border-bottom: 1px solid #000;
+
+      &.ion-no-border{
+        border: none;
+      }
+    }
+  }
+}

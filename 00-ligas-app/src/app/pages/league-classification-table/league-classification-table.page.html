@@ -1,0 +1,104 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Clasificación Ligas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="classification-table">
+  <ion-grid>
+	  <ion-row>
+		  <ion-col size="8">
+			  @if(leagues$ | async; as leagues) {
+				  <ion-select label="Liga" label-placement="stacked" [(ngModel)]="leagueSelected" (ionChange)="getSeasons()">
+					  @for(league of leagues; track league) {
+						  <ion-select-option value="{{league.idLeague}}">{{league.strLeagueAlternate || league.strLeague}}</ion-select-option>
+					  }
+				  </ion-select>
+			  }
+		  </ion-col>
+		  <ion-col size="4">
+			  @if (seasons$ | async; as seasons) {
+				  <ion-select label="Temporada" label-placement="stacked" [(ngModel)]="seasonSelected" (ionChange)="getClassificationTable()">
+					  @for(season of seasons; track season.strSeason) {
+						  <ion-select-option value="{{season.strSeason}}">{{season.strSeason}}</ion-select-option>
+					  }
+				  </ion-select>
+			  }
+		  </ion-col>
+	  </ion-row>
+
+	  @if (classification$ | async; as classification) {
+		  @if(classification.length === 0) {
+		  	<ion-row>
+				<ion-col class="ion-text-center">
+					<ion-text>No hay datos disponibles</ion-text>
+				</ion-col>
+			</ion-row>
+		  } @else {
+			  <ion-row>
+				  <ion-col size="1"></ion-col>
+				  <ion-col size="1"></ion-col>
+				  <ion-col size="3"></ion-col>
+				  <ion-col size="5" class="ion-text-center">Últimos 5</ion-col>
+				  <ion-col size="2" class="ion-text-center">Pts</ion-col>
+			  </ion-row>
+
+			  @for(team of classification; track team.idStanding; let i=$index) {
+			  	<ion-row [attr.data-id]="'row-' + i">
+					<ion-col size="1" class="ion-align-self-center">{{team.intRank < 10 ? '0': ''}}{{team.intRank}}</ion-col>
+					<ion-col size="1" class="ion-align-self-center">
+						<ion-img [src]="team.strBadge" />
+					</ion-col>
+					<ion-col size="3" class="ion-align-self-center">{{team.strTeam}}</ion-col>
+					<ion-col size="5" class="ion-align-self-center ion-text-center">
+						@for(form of team.strForm | reverse; track form ; let last=$last) {
+							@switch (form) {
+								@case ('W') {
+									<ion-icon class="icon-result" name="checkmark-circle" color="success" [ngClass]="{'recent-result': last}"></ion-icon>
+								}
+								@case ('D') {
+									<ion-icon class="icon-result" name="remove-circle" color="medium" [ngClass]="{'recent-result': last}"></ion-icon>
+								}
+								@case ('L') {
+									<ion-icon class="icon-result" name="close-circle" color="danger" [ngClass]="{'recent-result': last}"></ion-icon>
+								}
+							}
+						}
+					</ion-col>
+					<ion-col size="2" class="ion-align-self-center ion-text-center">
+						{{team.intPoints < 10 ? '0': ''}}{{team.intPoints}}
+					</ion-col>
+				</ion-row>
+
+				  <ion-popover [trigger]="'row-' + i" triggerAction="click" size="cover">
+					  <ng-template>
+						  <ion-content class="ion-padding">
+							  <ion-grid>
+								  <ion-row class="ion-text-center">
+									  <ion-col>MP</ion-col>
+									  <ion-col>W</ion-col>
+									  <ion-col>D</ion-col>
+									  <ion-col>L</ion-col>
+									  <ion-col>GF</ion-col>
+									  <ion-col>GA</ion-col>
+									  <ion-col>GD</ion-col>
+								  </ion-row>
+								  <ion-row class="ion-text-center ion-no-border">
+									  <ion-col>{{team.intPlayed}}</ion-col>
+									  <ion-col>{{team.intWin}}</ion-col>
+									  <ion-col>{{team.intDraw}}</ion-col>
+									  <ion-col>{{team.intLoss}}</ion-col>
+									  <ion-col>{{team.intGoalsFor}}</ion-col>
+									  <ion-col>{{team.intGoalsAgainst}}</ion-col>
+									  <ion-col>{{team.intGoalDifference}}</ion-col>
+								  </ion-row>
+							  </ion-grid>
+						  </ion-content>
+					  </ng-template>
+				  </ion-popover>
+
+			  }
+		  }
+	  }
+  </ion-grid>
+</ion-content>
