@@ -143,6 +143,27 @@
     },
     "@angular-eslint/schematics:library": {
       "setParserOptionsProject": true
+    },
+    "@schematics/angular:service": {
+      "type": "service",
+      "flat": false
+    },
+    "@schematics/angular:component": {
+      "style": "scss",
+      "inlineStyle": false,
+      "inlineTemplate": false,
+      "flat": false,
+      "type": "component",
+      "standalone": true
+    },
+    "@schematics/angular:pipe": {
+      "flat": false,
+      "typeSeparator": "."
+    },
+    "@schematics/angular:directive": {
+      "flat": false,
+      "type": "directive",
+      "standalone": true
     }
   }
 }

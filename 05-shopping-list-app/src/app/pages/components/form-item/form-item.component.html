@@ -1,0 +1,37 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="end">
+			<ion-button [disabled]="!item.description" (click)="confirm()">Hecho</ion-button>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>
+<ion-content>
+	<ion-grid>
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-input class="ion-text-right" label="Elemento" type="text"
+							   placeholder="Nombre del elemento a añadir..."
+							   name="description" [(ngModel)]="item.description"/>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-item lines="none">
+					<ion-input class="ion-text-right" type="number" label="Cantidad" placeholder="Cantidad..." name="quantity"
+							   min="1" inputmode="tel" [(ngModel)]="item.quantity" />
+				</ion-item>
+			</ion-col>
+			<ion-col>
+				<ion-item lines="none">
+					<ion-select label="Unidad" [(ngModel)]="item.unit">
+						@for(unit of unitsSignal(); track unit.id) {
+							<ion-select-option [value]="unit">{{unit.description}}</ion-select-option>
+						}
+					</ion-select>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>

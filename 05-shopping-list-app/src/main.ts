@@ -4,6 +4,9 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
+import { defineCustomElements as jeepSqlite} from 'jeep-sqlite/loader';
+
+jeepSqlite(window);
 
 bootstrapApplication(AppComponent, {
   providers: [
