@@ -1,0 +1,14 @@
+{
+  "name": "07-events-ddr-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone",
+  "@schematics/component": {
+    "standalone": true,
+    "style": "scss",
+    "inlineStyle": false,
+    "inlineTemplate": false,
+    "type": "component"
+  }
+}

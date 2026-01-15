@@ -1,0 +1,18 @@
+<ion-header [translucent]="true">
+	<ion-toolbar>
+		<ion-title>{{titlePage}}</ion-title>
+		@if (showButtons) {
+			<ion-buttons slot="end">
+				@if(isAuthenticatedSignal()) {
+					<ion-button (click)="logout()">
+						<ion-icon name="log-out-outline" />
+					</ion-button>
+				} @else {
+					<ion-button (click)="goToLogin()">
+						<ion-icon name="log-in-outline" />
+					</ion-button>
+				}
+			</ion-buttons>
+		}
+	</ion-toolbar>
+</ion-header>

@@ -1,0 +1,16 @@
+<app-toolbar [titlePage]="'Login'" [showButtons]="false"></app-toolbar>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+	  <ion-item>
+		  <ion-input type="email" label="Email" name="email" formControlName="email"></ion-input>
+	  </ion-item>
+	  <ion-item>
+		  <ion-input type="password" label="Contraseña" name="password" formControlName="password"></ion-input>
+	  </ion-item>
+	  <ion-item lines="none">
+		  <ion-button slot="start" type="button" routerLink="/events">Volver</ion-button>
+		  <ion-button slot="end" type="submit">Login</ion-button>
+	  </ion-item>
+  </form>
+</ion-content>

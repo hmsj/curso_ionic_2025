@@ -1,0 +1,69 @@
+<app-toolbar [titlePage]="'Eventos'"></app-toolbar>
+
+<ion-content [fullscreen]="true">
+	<ion-refresher slot="fixed" (ionRefresh)="refreshEvents($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
+	<ion-grid>
+		<ion-row>
+			<ion-col>
+				<ion-chip [ngClass]="{'selected': typeSearch === 'blog'}" class="blog" (click)="filterEventsByType('blog')">
+					<ion-icon name="desktop-outline"/>
+					<ion-label>Blog</ion-label>
+				</ion-chip>
+				<ion-chip [ngClass]="{'selected': typeSearch === 'video'}" class="video" (click)="filterEventsByType('video')">
+					<ion-icon name="caret-forward-circle-outline"/>
+					<ion-label>Video</ion-label>
+				</ion-chip>
+				<ion-chip [ngClass]="{'selected': typeSearch === 'streaming'}" class="streaming" (click)="filterEventsByType('streaming')">
+					<ion-icon name="videocam-outline"/>
+					<ion-label>Streaming</ion-label>
+				</ion-chip>
+				<ion-chip [ngClass]="{'selected': typeSearch ==='udemy'}" class="udemy" (click)="filterEventsByType('udemy')">
+					<ion-icon name="ticket-outline"/>
+					<ion-label>Udemy</ion-label>
+				</ion-chip>
+			</ion-col>
+		</ion-row>
+		@if (events.length === 0) {
+			<ion-row>
+				<ion-col class="ion-text-center ion-margin">
+					<ion-text>No hay eventos próximos</ion-text>
+				</ion-col>
+			</ion-row>
+		} @else {
+			@for (event of events; track event.id) {
+				<ion-row>
+					<ion-col>
+						<ion-card [class]="event.type" (click)="clickEvent(event)">
+							<ion-card-content>
+								<ion-item lines="none">
+									<ion-text>{{event.start | date: 'dd-MM-yyyy HH:mm'}}</ion-text>
+								</ion-item>
+								<ion-item lines="none">
+									<ion-text>{{event.title}}</ion-text>
+								</ion-item>
+								<ion-item lines="none">
+									<ion-text>{{event.description}}</ion-text>
+								</ion-item>
+							</ion-card-content>
+						</ion-card>
+					</ion-col>
+				</ion-row>
+			}
+		}
+	</ion-grid>
+</ion-content>
+
+@if(isAuthenticatedSignal()) {
+	<ion-footer class="ion-no-border">
+		<ion-toolbar>
+			<ion-fab vertical="center" horizontal="center">
+				<ion-fab-button routerLink="/create-event">
+					<ion-icon name="add"/>
+				</ion-fab-button>
+			</ion-fab>
+		</ion-toolbar>
+	</ion-footer>
+}
+

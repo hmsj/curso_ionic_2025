@@ -1,0 +1,40 @@
+<form [formGroup]="eventForm" (ngSubmit)="submit()">
+	<ion-input type="hidden" name="id" formControlName="id"/>
+	<ion-input type="hidden" name="notificationId" formControlName="notificationId"/>
+	<ion-item lines="none">
+		<ion-input name="title" type="text" label="Título" formControlName="title" errorText="El título no puede estar vacío"/>
+	</ion-item>
+	<ion-item>
+		<ion-label>Fecha de inicio</ion-label>
+		<ion-datetime-button datetime="datetime" />
+		<ion-modal [keepContentsMounted]="true">
+			<ng-template>
+				<ion-datetime id="datetime" name="start" formControlName="start" [min]="minDate"
+					[formatOptions]="{date: {month: 'long', day: '2-digit', year: 'numeric'}, time: {hour: '2-digit', minute: '2-digit'}}"></ion-datetime>
+			</ng-template>
+		</ion-modal>
+	</ion-item>
+	<ion-item>
+		<ion-select label="Tipo" name="type" formControlName="type">
+			<ion-select-option value="blog"> Post </ion-select-option>
+			<ion-select-option value="video"> Video </ion-select-option>
+			<ion-select-option value="streaming"> Streaming </ion-select-option>
+			<ion-select-option value="udemy"> Udemy </ion-select-option>
+		</ion-select>
+	</ion-item>
+	<ion-item lines="none">
+		<ion-input name="url" type="url" label="URL" formControlName="url" errorText="La URL no tiene el formato correcto"/>
+	</ion-item>
+	<ion-item lines="none">
+		<ion-textarea label="Descripción" name="description" formControlName="description" errorText="La descripción no puede estar vacía"></ion-textarea>
+	</ion-item>
+	<ion-item lines="none">
+		<ion-button type="submit" slot="end" [disabled]="eventForm.invalid">Guardar evento</ion-button>
+	</ion-item>
+</form>
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+	<ion-fab-button routerLink="/events">
+		<ion-icon name="chevron-back-outline"></ion-icon>
+	</ion-fab-button>
+</ion-fab>

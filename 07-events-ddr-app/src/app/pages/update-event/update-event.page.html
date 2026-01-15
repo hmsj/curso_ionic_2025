@@ -1,0 +1,14 @@
+<app-toolbar [titlePage]="'Actualizar evento'"></app-toolbar>
+
+<ion-content [fullscreen]="true">
+	@if(event) {
+		<app-form-event [event]="event" (submitForm)="updateEvent($event)"/>
+	}
+
+	@if(!event && load) {
+		<ion-item lines="none">
+			<ion-text color="danger">No existe el evento seleccionado</ion-text>
+			<ion-button slot="end" routerLink="/events">Volver</ion-button>
+		</ion-item>
+	}
+</ion-content>

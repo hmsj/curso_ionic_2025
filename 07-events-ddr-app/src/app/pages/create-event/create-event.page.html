@@ -1,0 +1,5 @@
+<app-toolbar [titlePage]="'Crear evento'"></app-toolbar>
+
+<ion-content [fullscreen]="true">
+  <app-form-event (submitForm)="createEvent($event)"/>
+</ion-content>
