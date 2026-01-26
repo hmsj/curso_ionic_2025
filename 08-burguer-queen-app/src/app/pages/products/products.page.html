@@ -1,0 +1,20 @@
+<ion-content [fullscreen]="true">
+	<ion-refresher slot="fixed" (ionRefresh)="refreshProducts($event)">
+		<ion-refresher-content />
+	</ion-refresher>
+
+	<ion-grid>
+		<ion-row>
+			@for(product of products; track product._id) {
+				<ion-col size="6">
+					<ion-card class="list ion-text-center" (click)="goToProduct(product)">
+						<ion-img [src]="product.img | imageUrl"/>
+						<ion-card-header>
+							<ion-card-title>{{product.name | translate}}</ion-card-title>
+						</ion-card-header>
+					</ion-card>
+				</ion-col>
+			}
+		</ion-row>
+	</ion-grid>
+</ion-content>

@@ -1,0 +1,67 @@
+<ion-content [fullscreen]="true">
+	@if (productSignal(); as product) {
+		<ion-grid>
+			<ion-row>
+				<ion-col>
+					<ion-item lines="none">
+						<ion-label>{{'label.price' | translate}}: {{product | calculateTotalPrice:quantitySignal()}}€</ion-label>
+						<ion-button [disabled]="quantitySignal() === 1" (click)="minusQuantity()">
+							<ion-icon name="remove-outline"/>
+						</ion-button>
+						<ion-text class="ion-margin-start ion-margin-end">{{quantitySignal()}}</ion-text>
+						<ion-button (click)="addQuantity()">
+							<ion-icon name="add-outline"/>
+						</ion-button>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+
+			<ion-row>
+				<ion-col>
+					<ion-card class="list ion-text-center">
+						<ion-img [src]="product.img | imageUrl"/>
+						<ion-card-header>
+							<ion-card-title>{{product.name | translate}}</ion-card-title>
+							<ion-card-subtitle>{{'label.price' | translate }}: {{product | calculateTotalPrice:quantitySignal()}}€</ion-card-subtitle>
+						</ion-card-header>
+					</ion-card>
+				</ion-col>
+			</ion-row>
+
+			@if (product.extras) {
+				<ion-row>
+					@for (extra of product.extras; track extra) {
+						<ion-col size="6">
+							<ion-card class="list ion-text-center">
+								<ion-img [src]="extra.img | imageUrl"/>
+								<ion-card-header>
+									<ion-card-title>{{extra.name | translate}}</ion-card-title>
+								</ion-card-header>
+								<ion-card-content>
+									@if(extra.options.length === 1) {
+										@let extraCheckbox = extra.options[0];
+										<ion-checkbox name="checkbox" [(ngModel)]="extra.options[0].selected" label-placement="end">{{extraCheckbox.selected ? extraCheckbox.price : '0'}}€</ion-checkbox>
+									} @else {
+										<ion-radio-group [value]="extra.options[0].name" (ionChange)="changeMultipleOptions($event, extra.options)">
+											@for (option of extra.options; track option) {
+												<ion-item lines="none">
+													<ion-radio name="extra_radio_{{option.name}}" [value]="option.name">{{option?.name | translate}} ({{option.price}}€)</ion-radio>
+												</ion-item>
+											}
+										</ion-radio-group>
+									}
+								</ion-card-content>
+							</ion-card>
+						</ion-col>
+					}
+				</ion-row>
+			}
+		</ion-grid>
+
+		<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+			<ion-fab-button (click)="addProductOrder(product)">
+				<ion-icon name="add-outline"></ion-icon>
+			</ion-fab-button>
+		</ion-fab>
+	}
+</ion-content>

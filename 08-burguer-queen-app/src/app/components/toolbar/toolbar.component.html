@@ -1,0 +1,57 @@
+<ion-menu contentId="content" menuId="content" side="end">
+	<ion-header>
+		<ion-toolbar>
+			@if (showOrder || showLogin || showNewAccount) {
+				<ion-button fill="clear" slot="start" (click)="back()">
+					<ion-icon name="arrow-back-outline" slot="start" color="light" />
+				</ion-button>
+			}
+			<ion-title color="light">{{ 'label.menu' | translate }}</ion-title>
+		</ion-toolbar>
+	</ion-header>
+	<ion-content>
+		@if(!showOrder && !showLogin && !showNewAccount){
+			<ion-list>
+				@if (userSignal()) {
+					<ion-item (click)="logout()">
+						<ion-icon slot="start" name="people-outline" />
+						<ion-label>{{ 'label.logout' | translate }}</ion-label>
+					</ion-item>
+				} @else {
+					<ion-item (click)="seeLogin()">
+						<ion-icon slot="start" name="people-outline" />
+						<ion-label>{{ 'label.start.session' | translate }}</ion-label>
+					</ion-item>
+				}
+
+				<ion-item (click)="seeOrder()" [disabled]="numProductsSignal() === 0">
+					<ion-icon slot="start" name="cart-outline" />
+					<ion-label>{{ 'label.see.order' | translate }}</ion-label>
+					<ion-badge slot="end" color="primary">{{ numProductsSignal() }}</ion-badge>
+				</ion-item>
+			</ion-list>
+		}
+		@if (showOrder) {
+			<app-list-products (pay)="goToPay()"/>
+		}
+
+		@if(showLogin) {
+			<app-login (doLogin)="back()" (newAccount)="seeNewAccount()" />
+		}
+
+		@if (showNewAccount) {
+			<app-create-account [showButtonBack]="true" (back)="seeLogin()" (doCreateAccount)="back()"/>
+		}
+	</ion-content>
+</ion-menu>
+
+<ion-header>
+	<ion-toolbar>
+		<ion-title>
+			<ion-img class="logo" src="/assets/img/logo-app.jpg" routerLink="/categories"/>
+		</ion-title>
+		<ion-buttons slot="end">
+			<ion-menu-button color="light"/>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-header>

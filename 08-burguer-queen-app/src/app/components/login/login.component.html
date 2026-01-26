@@ -1,0 +1,35 @@
+<form [formGroup]="formLogin" (ngSubmit)="login()">
+	<ion-grid>
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-input type="email" name="email" formControlName="email" [label]="'label.email' | translate"/>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-item>
+					<ion-input type="password" name="password" formControlName="password" [label]="'label.password' | translate" />
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-item lines="none">
+					@if(showButtonBack) {
+						<ion-button slot="start" type="button" (click)="exit()">
+							{{ 'label.back' | translate }}
+						</ion-button>
+					}
+					<ion-button type="submit" slot="end">{{ 'label.login' | translate }}</ion-button>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<a (click)="createNewAccount()">{{'label.new.account' | translate}}</a>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</form>
